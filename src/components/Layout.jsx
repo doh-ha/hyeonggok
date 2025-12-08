@@ -1,18 +1,14 @@
 import { Link, useLocation } from "react-router-dom";
 import "./Layout.css";
 
-interface LayoutProps {
-  children: React.ReactNode;
-}
-
-function Layout({ children }: LayoutProps) {
+function Layout({ children }) {
   const location = useLocation();
 
   return (
     <div className="layout">
       <nav className="navbar">
         <div className="nav-container">
-          <h1 className="logo">게임 이름</h1>
+          <h1 className="logo">확통으로 사냥하기</h1>
           <ul className="nav-menu">
             <li>
               <Link to="/quiz" className={location.pathname === "/quiz" ? "active" : ""}>

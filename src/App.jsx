@@ -10,7 +10,7 @@ function App() {
     <Router>
       <Layout>
         <Routes>
-          <Route path="/" element={<QuizPage />} />
+          <Route path="/" element={<BattlePage />} />
           <Route path="/quiz" element={<QuizPage />} />
           <Route path="/shop" element={<ItemPage />} />
           <Route path="/upgrade" element={<UpgradePage />} />
