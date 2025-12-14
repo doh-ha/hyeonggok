@@ -1,4 +1,4 @@
-import "./Page.css";
+import "./ShopPage.css";
 
 function ShopPage() {
   return (
@@ -11,4 +11,5 @@ function ShopPage() {
 }
 
 export default ShopPage;
+
 

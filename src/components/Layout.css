@@ -1,14 +1,16 @@
+/* 레이아웃 전체 스타일 */
 .layout {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
+/* 네비게이션 바 */
 .navbar {
-  background-color: #2c3e50;
+  background-color: var(--color-dark);
   color: white;
   padding: 1rem 0;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px var(--color-shadow);
 }
 
 .nav-container {
@@ -25,6 +27,23 @@
   font-weight: 700;
 }
 
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+/* 코인 표시 */
+.coin-display {
+  color: var(--color-orange);
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  background: var(--color-light-bg);
+  border-radius: 8px;
+}
+
+/* 메뉴 목록 */
 .nav-menu {
   display: flex;
   list-style: none;
@@ -36,17 +55,13 @@
   text-decoration: none;
   padding: 0.5rem 1rem;
   border-radius: 4px;
-  transition: background-color 0.3s;
-}
-
-.nav-menu a:hover {
-  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .nav-menu a.active {
-  background-color: #3498db;
+  background-color: var(--color-blue);
 }
 
+/* 메인 콘텐츠 영역 */
 .main-content {
   flex: 1;
   max-width: 1200px;
@@ -55,6 +70,7 @@
   padding: 2rem;
 }
 
+/* 모바일 화면 스타일 */
 @media (max-width: 768px) {
   .nav-container {
     flex-direction: column;
