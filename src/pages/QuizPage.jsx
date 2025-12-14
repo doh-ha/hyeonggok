@@ -46,7 +46,7 @@ function QuizPage() {
     setShowResult(true);
 
     // 선택한 답안이 정답인지 확인합니다
-    if (selectedAnswer === currentQuestion.correct) {
+    if (selectedAnswer === currentQuestion.answer) {
       // localStorage에서 현재 코인을 가져옵니다 (없으면 0)
       const currentCoins = parseInt(localStorage.getItem("coins") || "0", 10);
       // 코인을 100개 추가합니다
@@ -115,11 +115,11 @@ function QuizPage() {
               // 정답을 확인한 상태면
               if (showResult) {
                 // 이 선택지가 정답이면 초록색으로 표시
-                if (index === currentQuestion.correct) {
+                if (index === currentQuestion.answer) {
                   buttonClass += " correct";
                 }
                 // 이 선택지가 내가 선택한 답이고 틀렸으면 빨간색으로 표시
-                else if (index === selectedAnswer && index !== currentQuestion.correct) {
+                else if (index === selectedAnswer && index !== currentQuestion.answer) {
                   buttonClass += " incorrect";
                 }
               }
@@ -146,11 +146,7 @@ function QuizPage() {
             <div className="result-box">
               <div className="result-message">
                 {/* 정답이면 성공 메시지, 틀렸으면 실패 메시지를 표시합니다 */}
-                {selectedAnswer === currentQuestion.correct ? <p className="correct-message">정답입니다! +100 코인</p> : <p className="incorrect-message">틀렸습니다.</p>}
-              </div>
-              {/* 해설을 표시합니다 */}
-              <div className="explanation-box">
-                <p className="explanation-text">{currentQuestion.explanation}</p>
+                {selectedAnswer === currentQuestion.answer ? <p className="correct-message">정답입니다! +100 코인</p> : <p className="incorrect-message">틀렸습니다.</p>}
               </div>
               {/* 다음 문제 버튼을 표시합니다 */}
               <button className="next-button" onClick={handleNextQuestion}>

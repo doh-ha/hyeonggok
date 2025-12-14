@@ -75,8 +75,17 @@ function UpgradePage() {
 
     // 2초 후에 강화 결과를 결정합니다
     setTimeout(() => {
-      // 문제의 확률보다 작은 랜덤 숫자가 나오면 성공입니다
-      const success = Math.random() < question.probability;
+      // answer를 파싱해서 확률을 계산합니다 (예: "1/2" -> 0.5)
+      const parseProbability = (answerStr) => {
+        const parts = answerStr.split("/");
+        if (parts.length === 2) {
+          return parseFloat(parts[0]) / parseFloat(parts[1]);
+        }
+        return 0.5; // 파싱 실패 시 기본값
+      };
+      const probability = parseProbability(question.answer);
+      // 계산된 확률보다 작은 랜덤 숫자가 나오면 성공입니다
+      const success = Math.random() < probability;
       // 강화 진행 중 상태를 해제합니다
       setUpgrading(false);
       // 강화 결과를 저장합니다
@@ -187,10 +196,7 @@ function UpgradePage() {
               upgradeResult !== null && (
                 <>
                   <h3 className={upgradeResult ? "success" : "failure"}>{upgradeResult ? "강화 성공!" : "강화 실패..."}</h3>
-                  <p className="modal-probability">
-                    확률: {selectedQuestion.answer} ({(selectedQuestion.probability * 100).toFixed(1)}%)
-                  </p>
-                  <p className="modal-explanation">{selectedQuestion.explanation}</p>
+                  <p className="modal-probability">확률: {selectedQuestion.answer}</p>
                   <button className="close-button" onClick={handleCloseModal}>
                     확인
                   </button>
