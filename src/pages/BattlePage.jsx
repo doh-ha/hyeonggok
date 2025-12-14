@@ -1,4 +1,4 @@
-import "./Page.css";
+import "./BattlePage.css";
 
 function BattlePage() {
   return (
@@ -11,4 +11,3 @@ function BattlePage() {
 }
 
 export default BattlePage;
-

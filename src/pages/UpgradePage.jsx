@@ -1,4 +1,4 @@
-import "./Page.css";
+import "./UpgradePage.css";
 
 function UpgradePage() {
   return (
@@ -11,4 +11,3 @@ function UpgradePage() {
 }
 
 export default UpgradePage;
-

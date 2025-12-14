@@ -1,0 +1,19 @@
+// 색상 상수 정의
+// 최소한의 색상만 사용하고 재활용합니다
+
+export const colors = {
+  // 기본 색상 (5가지)
+  blue: "#3498db", // 파란색
+  green: "#2ecc71", // 초록색
+  red: "#e74c3c", // 빨간색
+  orange: "#f39c12", // 주황색
+  dark: "#2c3e50", // 진한 회색
+
+  // 보조 색상 (2가지)
+  gray: "#7f8c8d", // 회색
+  lightGray: "#e9ecef", // 연한 회색
+
+  // 배경 색상 (2가지)
+  white: "#ffffff", // 흰색
+  lightBg: "#f8f9fa", // 연한 회색 배경
+};
