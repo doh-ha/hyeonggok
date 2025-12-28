@@ -1,11 +1,220 @@
 import "./UpgradePage.css";
 
 function UpgradePage() {
+  // 보유한 아이템 ID 목록을 저장하는 상태
+  const [ownedItemIds, setOwnedItemIds] = useState([]);
+  // 아이템별 강화 레벨을 저장하는 상태 (예: {1: 1, 2: 2})
+  const [itemLevels, setItemLevels] = useState({});
+  // 강화할 아이템을 선택한 상태
+  const [selectedItem, setSelectedItem] = useState(null);
+  // 선택된 확률 문제 3개를 저장하는 상태
+  const [selectedQuestions, setSelectedQuestions] = useState([]);
+  // 모달(팝업 창)을 보여줄지 여부를 저장하는 상태
+  const [showModal, setShowModal] = useState(false);
+  // 강화가 진행 중인지 여부를 저장하는 상태
+  const [upgrading, setUpgrading] = useState(false);
+  // 강화 결과(성공/실패)를 저장하는 상태 (null은 아직 결과가 없음)
+  const [upgradeResult, setUpgradeResult] = useState(null);
+  // 선택한 확률 문제를 저장하는 상태
+  const [selectedQuestion, setSelectedQuestion] = useState(null);
+
+  // 컴포넌트가 처음 화면에 나타날 때 실행됩니다
+  useEffect(() => {
+    // localStorage에서 저장된 아이템 ID 목록을 가져옵니다
+    const savedItems = localStorage.getItem("ownedItems");
+    const itemIds = savedItems ? JSON.parse(savedItems) : [];
+    setOwnedItemIds(itemIds);
+
+    // localStorage에서 아이템별 강화 레벨을 가져옵니다
+    const savedLevels = localStorage.getItem("itemLevels");
+    if (savedLevels) {
+      setItemLevels(JSON.parse(savedLevels));
+    } else {
+      // 저장된 레벨이 없으면 모든 아이템을 레벨 1로 초기화
+      const initialLevels = {};
+      itemIds.forEach((id) => {
+        initialLevels[id] = 1;
+      });
+      setItemLevels(initialLevels);
+      localStorage.setItem("itemLevels", JSON.stringify(initialLevels));
+    }
+  }, []);
+
+  // 아이템을 선택했을 때 실행됩니다
+  useEffect(() => {
+    if (selectedItem) {
+      // 확률 문제들을 랜덤으로 섞습니다
+      const shuffled = [...probabilityData].sort(() => Math.random() - 0.5);
+      // 앞에서 3개만 선택해서 저장합니다
+      setSelectedQuestions(shuffled.slice(0, 3));
+    }
+  }, [selectedItem]);
+
+  // 아이템을 선택했을 때 실행되는 함수
+  const handleSelectItem = (item) => {
+    // 선택한 아이템을 상태에 저장합니다
+    setSelectedItem(item);
+    // 모달을 닫습니다
+    setShowModal(false);
+    // 강화 진행 상태를 초기화합니다
+    setUpgrading(false);
+    // 강화 결과를 초기화합니다
+    setUpgradeResult(null);
+    // 선택한 문제를 초기화합니다
+    setSelectedQuestion(null);
+  };
+
+  // 확률 문제를 선택했을 때 실행되는 함수
+  const handleSelectQuestion = (question) => {
+    // 선택한 문제를 저장합니다
+    setSelectedQuestion(question);
+    // 모달을 보여줍니다
+    setShowModal(true);
+    // 강화 진행 중 상태로 변경합니다
+    setUpgrading(true);
+    // 강화 결과를 초기화합니다
+    setUpgradeResult(null);
+
+    // 2초 후에 강화 결과를 결정합니다
+    setTimeout(() => {
+      // answer를 파싱해서 확률을 계산합니다 (예: "1/2" -> 0.5)
+      const parseProbability = (answerStr) => {
+        const parts = answerStr.split("/");
+        if (parts.length === 2) {
+          return parseFloat(parts[0]) / parseFloat(parts[1]);
+        }
+        return 0.5; // 파싱 실패 시 기본값
+      };
+      const probability = parseProbability(question.answer);
+      // 계산된 확률보다 작은 랜덤 숫자가 나오면 성공입니다
+      const success = Math.random() < probability;
+      // 강화 진행 중 상태를 해제합니다
+      setUpgrading(false);
+      // 강화 결과를 저장합니다
+      setUpgradeResult(success);
+
+      // 강화에 성공했고 아이템이 선택되어 있으면
+      if (success && selectedItem) {
+        const itemId = selectedItem.id;
+        const currentLevel = itemLevels[itemId] || 1;
+        const maxLevel = selectedItem.maxLevel;
+
+        // 최대 강화 단계가 아니면 레벨을 1 증가시킵니다
+        if (currentLevel < maxLevel) {
+          const newLevels = { ...itemLevels, [itemId]: currentLevel + 1 };
+          setItemLevels(newLevels);
+          localStorage.setItem("itemLevels", JSON.stringify(newLevels));
+
+          // 선택한 아이템의 레벨 정보를 업데이트합니다
+          setSelectedItem({ ...selectedItem, currentLevel: currentLevel + 1 });
+        }
+      }
+    }, 2000);
+  };
+
+  // 모달을 닫을 때 실행되는 함수
+  const handleCloseModal = () => {
+    // 모달을 숨깁니다
+    setShowModal(false);
+    // 강화 진행 상태를 초기화합니다
+    setUpgrading(false);
+    // 강화 결과를 초기화합니다
+    setUpgradeResult(null);
+    // 선택한 문제를 초기화합니다
+    setSelectedQuestion(null);
+    // 아이템이 선택되어 있으면 새로운 문제 세트를 생성합니다
+    if (selectedItem) {
+      const shuffled = [...probabilityData].sort(() => Math.random() - 0.5);
+      setSelectedQuestions(shuffled.slice(0, 3));
+    }
+  };
+
   return (
     <div className="page">
       <h2>아이템 강화</h2>
-      <p>보기를 선택해서 아이템을 강화하세요!</p>
-      {/* 아이템 강화 기능 구현 예정 */}
+
+      {/* 가방 섹션 */}
+      <div className="inventory-section">
+        <h3>가방</h3>
+        {/* 보유한 아이템이 없으면 메시지를 표시합니다 */}
+        {ownedItemIds.length === 0 ? (
+          <p className="empty-inventory">보유한 아이템이 없습니다.</p>
+        ) : (
+          // 보유한 아이템들을 표시합니다
+          <div className="inventory-container">
+            {ownedItemIds.map((itemId) => {
+              // itemsData에서 해당 ID의 아이템을 찾습니다
+              const item = itemsData.find((i) => i.id === itemId);
+              if (!item) return null;
+
+              const currentLevel = itemLevels[itemId] || 1;
+              const itemWithLevel = { ...item, currentLevel };
+
+              return (
+                <div key={itemId} className={`inventory-item ${selectedItem?.id === itemId ? "selected" : ""}`} onClick={() => handleSelectItem(itemWithLevel)}>
+                  <div className="inventory-icon">{item.icon}</div>
+                  <div className="inventory-info">
+                    <div className="inventory-name">{item.name}</div>
+                    <div className="inventory-level">
+                      강화 {currentLevel} / {item.maxLevel}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
+
+      {/* 아이템을 선택했으면 강화 섹션을 표시합니다 */}
+      {selectedItem && (
+        <div className="upgrade-section">
+          <h3>{selectedItem.name} 강화</h3>
+          <p>아래 문제 중 가장 높은 확률을 가진 문제를 선택하세요!</p>
+
+          {/* 확률 문제들을 표시합니다 */}
+          {selectedQuestions.length > 0 && (
+            <div className="questions-container">
+              {selectedQuestions.map((question, index) => (
+                <div key={question.id} className="question-card">
+                  <div className="question-number">문제 {index + 1}</div>
+                  <div className="question-text">{question.question}</div>
+                  <button className="select-button" onClick={() => handleSelectQuestion(question)} disabled={showModal || selectedItem.currentLevel >= selectedItem.maxLevel}>
+                    {selectedItem.currentLevel >= selectedItem.maxLevel ? "최대 강화 단계" : "이 확률 선택"}
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* 모달을 표시합니다 */}
+      {showModal && selectedQuestion && (
+        <div className="modal-overlay" onClick={!upgrading ? handleCloseModal : undefined}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            {/* 강화가 진행 중이면 */}
+            {upgrading ? (
+              <>
+                <h3>강화 진행중</h3>
+                <p className="modal-probability">{selectedQuestion.answer} 확률로 강화 진행중...</p>
+                <div className="loading-spinner"></div>
+              </>
+            ) : (
+              // 강화 결과가 있으면
+              upgradeResult !== null && (
+                <>
+                  <h3 className={upgradeResult ? "success" : "failure"}>{upgradeResult ? "강화 성공!" : "강화 실패..."}</h3>
+                  <p className="modal-probability">확률: {selectedQuestion.answer}</p>
+                  <button className="close-button" onClick={handleCloseModal}>
+                    확인
+                  </button>
+                </>
+              )
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
