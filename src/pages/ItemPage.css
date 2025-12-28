@@ -15,4 +15,107 @@
 .page p {
   color: #7f8c8d;
   font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+
+/* 아이템 목록 컨테이너 */
+.items-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+/* 아이템 카드 */
+.item-card {
+  background: var(--color-light-bg);
+  border: 2px solid var(--color-light-gray);
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.item-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px var(--color-shadow);
+}
+
+/* 아이템 아이콘 */
+.item-icon {
+  font-size: 4rem;
+  margin-bottom: 0.5rem;
+}
+
+/* 아이템 정보 */
+.item-info {
+  text-align: center;
+  width: 100%;
+}
+
+.item-name {
+  color: var(--color-dark);
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+}
+
+.item-level {
+  color: var(--color-gray);
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.item-price {
+  color: var(--color-orange);
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+/* 보유 중 뱃지 */
+.owned-badge {
+  background: var(--color-green);
+  color: white;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-top: 0.5rem;
+  display: inline-block;
+}
+
+/* 구매 버튼 */
+.buy-button {
+  width: 100%;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.buy-button:not(.owned):not(.disabled) {
+  background: var(--color-blue);
+  color: white;
+}
+
+.buy-button:not(.owned):not(.disabled):hover {
+  background: #2980b9;
+}
+
+.buy-button.owned {
+  background: var(--color-gray);
+  color: white;
+  cursor: not-allowed;
+}
+
+.buy-button.disabled {
+  background: var(--color-light-gray);
+  color: var(--color-gray);
+  cursor: not-allowed;
 }
