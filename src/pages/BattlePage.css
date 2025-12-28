@@ -16,3 +16,225 @@
   color: #7f8c8d;
   font-size: 1.1rem;
 }
+
+/* 전투 컨테이너 */
+.battle-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+/* 몬스터 섹션 */
+.monster-section {
+  text-align: center;
+  padding: 2rem;
+  background: var(--color-light-bg);
+  border-radius: 12px;
+  border: 2px solid var(--color-light-gray);
+}
+
+.monster-section h3 {
+  color: var(--color-dark);
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.monster-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.monster-icon {
+  font-size: 5rem;
+}
+
+.monster-name {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--color-dark);
+}
+
+.monster-hp {
+  font-size: 1.2rem;
+  color: var(--color-red);
+  font-weight: 600;
+}
+
+/* 아이템 선택 섹션 */
+.item-selection-section {
+  padding: 1.5rem;
+  background: var(--color-light-bg);
+  border-radius: 12px;
+}
+
+.item-selection-section h3 {
+  color: var(--color-dark);
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+.no-items {
+  text-align: center;
+  color: var(--color-gray);
+  padding: 2rem;
+}
+
+/* 전투 아이템 컨테이너 */
+.battle-items-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 1rem;
+}
+
+.battle-item {
+  background: white;
+  border: 2px solid var(--color-light-gray);
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.battle-item:hover {
+  border-color: var(--color-blue);
+  transform: translateY(-2px);
+}
+
+.battle-item.selected {
+  border-color: var(--color-blue);
+  background: #e3f2fd;
+}
+
+.battle-item-icon {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+}
+
+.battle-item-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-dark);
+  margin-bottom: 0.3rem;
+}
+
+.battle-item-level {
+  font-size: 0.9rem;
+  color: var(--color-gray);
+}
+
+/* 전투 정보 */
+.battle-info {
+  text-align: center;
+  padding: 1.5rem;
+  background: var(--color-light-bg);
+  border-radius: 12px;
+}
+
+.battle-info p {
+  margin-bottom: 1rem;
+  color: var(--color-dark);
+}
+
+.start-battle-button {
+  background: var(--color-red);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.start-battle-button:hover {
+  background: #c0392b;
+}
+
+/* 전투 결과 섹션 */
+.battle-result-section {
+  text-align: center;
+  padding: 2rem;
+  background: var(--color-light-bg);
+  border-radius: 12px;
+}
+
+.battle-progress {
+  padding: 2rem;
+}
+
+.battle-text {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--color-dark);
+  margin-bottom: 1rem;
+}
+
+.battle-animation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  font-size: 3rem;
+}
+
+.vs-text {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--color-gray);
+}
+
+.monster-icon-small {
+  font-size: 3rem;
+}
+
+.battle-result {
+  padding: 2rem;
+}
+
+.victory-message {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-green);
+  margin-bottom: 1rem;
+}
+
+.reward-message {
+  font-size: 1.3rem;
+  color: var(--color-orange);
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.defeat-message {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-red);
+  margin-bottom: 1rem;
+}
+
+.defeat-text {
+  font-size: 1.1rem;
+  color: var(--color-gray);
+  margin-bottom: 1.5rem;
+}
+
+.reset-battle-button {
+  background: var(--color-blue);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.reset-battle-button:hover {
+  background: #2980b9;
+}

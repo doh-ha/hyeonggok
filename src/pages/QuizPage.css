@@ -16,3 +16,149 @@
   color: #7f8c8d;
   font-size: 1.1rem;
 }
+
+/* 코인 표시 */
+.coin-display {
+  background: var(--color-light-bg);
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  display: inline-block;
+}
+
+.coin-display span:first-child {
+  color: var(--color-gray);
+  font-size: 1rem;
+}
+
+.coin-amount {
+  color: var(--color-orange);
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-left: 0.5rem;
+}
+
+/* 퀴즈 컨테이너 */
+.quiz-container {
+  margin-top: 2rem;
+}
+
+.quiz-question {
+  background: var(--color-light-bg);
+  padding: 2rem;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  border: 2px solid var(--color-light-gray);
+}
+
+.quiz-question h3 {
+  color: var(--color-dark);
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+.question-text {
+  color: var(--color-dark);
+  font-size: 1.2rem;
+  line-height: 1.6;
+}
+
+/* 선택지 영역 */
+.quiz-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.option-button {
+  background: white;
+  border: 2px solid var(--color-light-gray);
+  border-radius: 8px;
+  padding: 1.2rem;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--color-dark);
+}
+
+.option-button:hover:not(:disabled) {
+  border-color: var(--color-blue);
+  background: #e3f2fd;
+  transform: translateY(-2px);
+}
+
+.option-button.selected {
+  border-color: var(--color-blue);
+  background: #e3f2fd;
+  font-weight: 600;
+}
+
+.option-button.correct {
+  border-color: var(--color-green);
+  background: #e8f5e9;
+  color: var(--color-green);
+  font-weight: 600;
+}
+
+.option-button.incorrect {
+  border-color: var(--color-red);
+  background: #ffebee;
+  color: var(--color-red);
+}
+
+.option-button:disabled {
+  cursor: not-allowed;
+}
+
+/* 정답 결과 */
+.quiz-result {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+
+.result-message {
+  font-size: 1.3rem;
+  font-weight: 600;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.result-message.correct {
+  background: #e8f5e9;
+  color: var(--color-green);
+}
+
+.result-message.incorrect {
+  background: #ffebee;
+  color: var(--color-red);
+}
+
+/* 제출 버튼 */
+.quiz-submit {
+  text-align: center;
+}
+
+.submit-button {
+  background: var(--color-blue);
+  color: white;
+  border: none;
+  padding: 1rem 3rem;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.submit-button:hover:not(:disabled) {
+  background: #2980b9;
+}
+
+.submit-button:disabled {
+  background: var(--color-light-gray);
+  color: var(--color-gray);
+  cursor: not-allowed;
+}
