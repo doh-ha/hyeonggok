@@ -7,8 +7,10 @@ import probabilityData from "../data/probability.json";
 import itemsData from "../data/items.json";
 
 function UpgradePage() {
-  // 보유한 아이템 목록을 저장하는 상태
-  const [ownedItems, setOwnedItems] = useState([]);
+  // 보유한 아이템 ID 목록을 저장하는 상태
+  const [ownedItemIds, setOwnedItemIds] = useState([]);
+  // 아이템별 강화 레벨을 저장하는 상태 (예: {1: 1, 2: 2})
+  const [itemLevels, setItemLevels] = useState({});
   // 강화할 아이템을 선택한 상태
   const [selectedItem, setSelectedItem] = useState(null);
   // 선택된 확률 문제 3개를 저장하는 상태
@@ -24,17 +26,23 @@ function UpgradePage() {
 
   // 컴포넌트가 처음 화면에 나타날 때 실행됩니다
   useEffect(() => {
-    // localStorage에서 저장된 아이템을 가져옵니다
+    // localStorage에서 저장된 아이템 ID 목록을 가져옵니다
     const savedItems = localStorage.getItem("ownedItems");
-    if (savedItems) {
-      // 저장된 아이템이 있으면 JSON 형식으로 변환해서 상태에 저장합니다
-      setOwnedItems(JSON.parse(savedItems));
+    const itemIds = savedItems ? JSON.parse(savedItems) : [];
+    setOwnedItemIds(itemIds);
+
+    // localStorage에서 아이템별 강화 레벨을 가져옵니다
+    const savedLevels = localStorage.getItem("itemLevels");
+    if (savedLevels) {
+      setItemLevels(JSON.parse(savedLevels));
     } else {
-      // 저장된 아이템이 없으면 기본 아이템 2개를 가방에 추가합니다
-      const defaultItems = [itemsData[0], itemsData[1]];
-      setOwnedItems(defaultItems);
-      // localStorage에 저장합니다
-      localStorage.setItem("ownedItems", JSON.stringify(defaultItems));
+      // 저장된 레벨이 없으면 모든 아이템을 레벨 1로 초기화
+      const initialLevels = {};
+      itemIds.forEach((id) => {
+        initialLevels[id] = 1;
+      });
+      setItemLevels(initialLevels);
+      localStorage.setItem("itemLevels", JSON.stringify(initialLevels));
     }
   }, []);
 
@@ -93,21 +101,19 @@ function UpgradePage() {
 
       // 강화에 성공했고 아이템이 선택되어 있으면
       if (success && selectedItem) {
-        // 아이템 목록을 업데이트합니다
-        const updatedItems = ownedItems.map((item) => {
-          // 선택한 아이템이고 최대 강화 단계가 아니면 레벨을 1 증가시킵니다
-          if (item.id === selectedItem.id && item.currentLevel < item.maxLevel) {
-            return { ...item, currentLevel: item.currentLevel + 1 };
-          }
-          // 그 외의 아이템은 그대로 유지합니다
-          return item;
-        });
-        // 업데이트된 아이템 목록을 상태에 저장합니다
-        setOwnedItems(updatedItems);
-        // localStorage에도 저장합니다
-        localStorage.setItem("ownedItems", JSON.stringify(updatedItems));
-        // 선택한 아이템도 업데이트된 정보로 변경합니다
-        setSelectedItem(updatedItems.find((item) => item.id === selectedItem.id));
+        const itemId = selectedItem.id;
+        const currentLevel = itemLevels[itemId] || 1;
+        const maxLevel = selectedItem.maxLevel;
+
+        // 최대 강화 단계가 아니면 레벨을 1 증가시킵니다
+        if (currentLevel < maxLevel) {
+          const newLevels = { ...itemLevels, [itemId]: currentLevel + 1 };
+          setItemLevels(newLevels);
+          localStorage.setItem("itemLevels", JSON.stringify(newLevels));
+
+          // 선택한 아이템의 레벨 정보를 업데이트합니다
+          setSelectedItem({ ...selectedItem, currentLevel: currentLevel + 1 });
+        }
       }
     }, 2000);
   };
@@ -137,22 +143,31 @@ function UpgradePage() {
       <div className="inventory-section">
         <h3>가방</h3>
         {/* 보유한 아이템이 없으면 메시지를 표시합니다 */}
-        {ownedItems.length === 0 ? (
+        {ownedItemIds.length === 0 ? (
           <p className="empty-inventory">보유한 아이템이 없습니다.</p>
         ) : (
           // 보유한 아이템들을 표시합니다
           <div className="inventory-container">
-            {ownedItems.map((item) => (
-              <div key={item.id} className={`inventory-item ${selectedItem?.id === item.id ? "selected" : ""}`} onClick={() => handleSelectItem(item)}>
-                <div className="inventory-icon">{item.icon}</div>
-                <div className="inventory-info">
-                  <div className="inventory-name">{item.name}</div>
-                  <div className="inventory-level">
-                    강화 {item.currentLevel} / {item.maxLevel}
+            {ownedItemIds.map((itemId) => {
+              // itemsData에서 해당 ID의 아이템을 찾습니다
+              const item = itemsData.find((i) => i.id === itemId);
+              if (!item) return null;
+
+              const currentLevel = itemLevels[itemId] || 1;
+              const itemWithLevel = { ...item, currentLevel };
+
+              return (
+                <div key={itemId} className={`inventory-item ${selectedItem?.id === itemId ? "selected" : ""}`} onClick={() => handleSelectItem(itemWithLevel)}>
+                  <div className="inventory-icon">{item.icon}</div>
+                  <div className="inventory-info">
+                    <div className="inventory-name">{item.name}</div>
+                    <div className="inventory-level">
+                      강화 {currentLevel} / {item.maxLevel}
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
       </div>
@@ -171,7 +186,7 @@ function UpgradePage() {
                   <div className="question-number">문제 {index + 1}</div>
                   <div className="question-text">{question.question}</div>
                   <button className="select-button" onClick={() => handleSelectQuestion(question)} disabled={showModal || selectedItem.currentLevel >= selectedItem.maxLevel}>
-                    {selectedItem.currentLevel >= selectedItem.maxLevel ? "최대 강화 단계" : "이 문제 선택"}
+                    {selectedItem.currentLevel >= selectedItem.maxLevel ? "최대 강화 단계" : "이 확률 선택"}
                   </button>
                 </div>
               ))}

@@ -5,8 +5,13 @@ import { useState, useEffect } from "react";
 import "./QuizPage.css";
 // cases.json 파일에서 문제 데이터를 가져옵니다
 import casesData from "../data/cases.json";
+// 코인 컨텍스트를 가져옵니다
+import { useCoins } from "../contexts/CoinContext";
 
 function QuizPage() {
+  // 코인 컨텍스트에서 코인 관련 함수들을 가져옵니다
+  const { addCoins } = useCoins();
+
   // 현재 문제의 번호를 저장하는 상태 (0부터 시작)
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 
@@ -47,12 +52,8 @@ function QuizPage() {
 
     // 선택한 답안이 정답인지 확인합니다
     if (selectedAnswer === currentQuestion.answer) {
-      // localStorage에서 현재 코인을 가져옵니다 (없으면 0)
-      const currentCoins = parseInt(localStorage.getItem("coins") || "0", 10);
       // 코인을 100개 추가합니다
-      const newCoins = currentCoins + 100;
-      // 새로운 코인 수를 localStorage에 저장합니다
-      localStorage.setItem("coins", newCoins.toString());
+      addCoins(100);
     }
   };
 
