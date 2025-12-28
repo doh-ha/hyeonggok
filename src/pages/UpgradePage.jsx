@@ -1,3 +1,6 @@
+import { useState, useEffect } from "react";
+import itemsData from "../data/items.json";
+import probabilityData from "../data/probability.json";
 import "./UpgradePage.css";
 
 function UpgradePage() {
@@ -77,11 +80,17 @@ function UpgradePage() {
 
     // 2초 후에 강화 결과를 결정합니다
     setTimeout(() => {
-      // answer를 파싱해서 확률을 계산합니다 (예: "1/2" -> 0.5)
+      // answer를 파싱해서 확률을 계산합니다 (예: "1/2" 또는 "3 / 10" -> 0.5)
       const parseProbability = (answerStr) => {
-        const parts = answerStr.split("/");
+        // 공백을 제거하고 "/"로 분리합니다
+        const cleaned = answerStr.replace(/\s+/g, "");
+        const parts = cleaned.split("/");
         if (parts.length === 2) {
-          return parseFloat(parts[0]) / parseFloat(parts[1]);
+          const numerator = parseFloat(parts[0]);
+          const denominator = parseFloat(parts[1]);
+          if (denominator !== 0) {
+            return numerator / denominator;
+          }
         }
         return 0.5; // 파싱 실패 시 기본값
       };

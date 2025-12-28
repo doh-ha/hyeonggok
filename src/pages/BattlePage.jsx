@@ -1,3 +1,6 @@
+import { useState, useEffect } from "react";
+import itemsData from "../data/items.json";
+import monstersData from "../data/monsters.json";
 import "./BattlePage.css";
 
 function BattlePage() {
@@ -12,11 +15,23 @@ function BattlePage() {
 
   // 컴포넌트가 처음 화면에 나타날 때 실행됩니다
   useEffect(() => {
-    // localStorage에서 저장된 아이템을 가져옵니다
+    // localStorage에서 저장된 아이템 ID 목록을 가져옵니다
     const savedItems = localStorage.getItem("ownedItems");
     if (savedItems) {
-      // 저장된 아이템이 있으면 JSON 형식으로 변환해서 상태에 저장합니다
-      setOwnedItems(JSON.parse(savedItems));
+      // 저장된 아이템 ID 목록을 JSON 형식으로 변환합니다
+      const itemIds = JSON.parse(savedItems);
+      // 아이템 ID 목록을 실제 아이템 데이터로 변환합니다
+      const items = itemIds.map((id) => {
+        const item = itemsData.find((i) => i.id === id);
+        if (!item) return null;
+        // localStorage에서 아이템 강화 레벨을 가져옵니다
+        const savedLevels = localStorage.getItem("itemLevels");
+        const itemLevels = savedLevels ? JSON.parse(savedLevels) : {};
+        const currentLevel = itemLevels[id] || 1;
+        return { ...item, currentLevel };
+      }).filter(Boolean);
+      // 변환된 아이템들을 상태에 저장합니다
+      setOwnedItems(items);
     }
   }, []);
 

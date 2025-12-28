@@ -1,8 +1,11 @@
+import { useState, useEffect } from "react";
+import { useCoins } from "../contexts/CoinContext";
+import casesData from "../data/cases.json";
 import "./QuizPage.css";
 
 function QuizPage() {
   // 코인 컨텍스트에서 코인 관련 함수들을 가져옵니다
-  const { addCoins } = useCoins();
+  const { coins, addCoins } = useCoins();
 
   // 현재 문제의 번호를 저장하는 상태 (0부터 시작)
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -89,27 +92,52 @@ function QuizPage() {
       {/* 보유 코인 표시 */}
       <div className="coin-display">
         <span>보유 코인: </span>
-        <span className="coin-amount">0</span>
+        <span className="coin-amount">{coins}</span>
       </div>
 
       {/* 퀴즈 문제 영역 */}
       <div className="quiz-container">
         <div className="quiz-question">
-          <h3>문제</h3>
-          <p className="question-text">1 + 1은 얼마일까요?</p>
+          <h3>문제 {currentQuestionIndex + 1}</h3>
+          <p className="question-text">{currentQuestion?.question}</p>
         </div>
 
         {/* 선택지 영역 */}
         <div className="quiz-options">
-          <button className="option-button">1</button>
-          <button className="option-button">2</button>
-          <button className="option-button">3</button>
-          <button className="option-button">4</button>
+          {currentQuestion?.options.map((option, index) => (
+            <button
+              key={index}
+              className={`option-button ${selectedAnswer === index ? "selected" : ""} ${showResult ? (index === currentQuestion.answer ? "correct" : selectedAnswer === index && index !== currentQuestion.answer ? "incorrect" : "") : ""}`}
+              onClick={() => handleSelectAnswer(index)}
+              disabled={showResult}
+            >
+              {option}
+            </button>
+          ))}
         </div>
+
+        {/* 정답 확인 결과 표시 */}
+        {showResult && (
+          <div className="quiz-result">
+            {selectedAnswer === currentQuestion.answer ? (
+              <p className="result-message correct">정답입니다! +100 코인 획득!</p>
+            ) : (
+              <p className="result-message incorrect">틀렸습니다. 정답은 {currentQuestion.options[currentQuestion.answer]}입니다.</p>
+            )}
+          </div>
+        )}
 
         {/* 제출 버튼 */}
         <div className="quiz-submit">
-          <button className="submit-button">정답 제출</button>
+          {!showResult ? (
+            <button className="submit-button" onClick={handleCheckAnswer} disabled={selectedAnswer === null}>
+              정답 제출
+            </button>
+          ) : (
+            <button className="submit-button" onClick={handleNextQuestion}>
+              {currentQuestionIndex < shuffledQuestions.length - 1 ? "다음 문제" : "문제 다시 풀기"}
+            </button>
+          )}
         </div>
       </div>
     </div>

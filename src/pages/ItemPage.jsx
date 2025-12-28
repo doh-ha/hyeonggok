@@ -1,6 +1,9 @@
+import { useState } from "react";
+import { useCoins } from "../contexts/CoinContext";
+import itemsData from "../data/items.json";
 import "./ItemPage.css";
 
-function ShopPage() {
+function ItemPage() {
   // 코인 컨텍스트에서 코인 관련 함수들을 가져옵니다
   const { coins, spendCoins, hasEnoughCoins } = useCoins();
   // 구매한 아이템을 저장하는 상태
@@ -92,4 +95,4 @@ function ShopPage() {
   );
 }
 
-export default ShopPage;
+export default ItemPage;
