@@ -1,12 +1,4 @@
-// React의 useState와 useEffect를 가져옵니다
-// useState: 컴포넌트의 상태(데이터)를 관리하는 함수
-// useEffect: 컴포넌트가 화면에 나타날 때 실행되는 함수
-import { useState, useEffect } from "react";
 import "./QuizPage.css";
-// cases.json 파일에서 문제 데이터를 가져옵니다
-import casesData from "../data/cases.json";
-// 코인 컨텍스트를 가져옵니다
-import { useCoins } from "../contexts/CoinContext";
 
 function QuizPage() {
   // 코인 컨텍스트에서 코인 관련 함수들을 가져옵니다
@@ -93,70 +85,33 @@ function QuizPage() {
   return (
     <div className="page">
       <h2>퀴즈 풀기</h2>
-      {/* 현재 문제 번호와 전체 문제 수를 표시합니다 */}
-      <p>
-        문제 {currentQuestionIndex + 1} / {shuffledQuestions.length}
-      </p>
+      
+      {/* 보유 코인 표시 */}
+      <div className="coin-display">
+        <span>보유 코인: </span>
+        <span className="coin-amount">0</span>
+      </div>
 
-      {/* 현재 문제가 있으면 문제를 표시합니다 */}
-      {currentQuestion && (
-        <div className="quiz-container">
-          {/* 문제를 표시하는 박스 */}
-          <div className="question-box">
-            <h3 className="question-text">{currentQuestion.question}</h3>
-          </div>
-
-          {/* 선택지 버튼들을 표시합니다 */}
-          <div className="options-container">
-            {/* 각 선택지를 버튼으로 만듭니다 */}
-            {currentQuestion.options.map((option, index) => {
-              // 버튼의 스타일을 결정하는 변수
-              let buttonClass = "option-button";
-
-              // 정답을 확인한 상태면
-              if (showResult) {
-                // 이 선택지가 정답이면 초록색으로 표시
-                if (index === currentQuestion.answer) {
-                  buttonClass += " correct";
-                }
-                // 이 선택지가 내가 선택한 답이고 틀렸으면 빨간색으로 표시
-                else if (index === selectedAnswer && index !== currentQuestion.answer) {
-                  buttonClass += " incorrect";
-                }
-              }
-              // 정답을 확인하지 않은 상태에서 내가 선택한 답이면
-              else if (selectedAnswer === index) {
-                buttonClass += " selected";
-              }
-
-              return (
-                <button key={index} className={buttonClass} onClick={() => handleSelectAnswer(index)} disabled={showResult}>
-                  {option}
-                </button>
-              );
-            })}
-          </div>
-
-          {/* 정답을 확인하지 않았으면 정답 확인 버튼을 보여줍니다 */}
-          {!showResult ? (
-            <button className="check-button" onClick={handleCheckAnswer} disabled={selectedAnswer === null}>
-              정답 확인
-            </button>
-          ) : (
-            // 정답을 확인했으면 결과를 보여줍니다
-            <div className="result-box">
-              <div className="result-message">
-                {/* 정답이면 성공 메시지, 틀렸으면 실패 메시지를 표시합니다 */}
-                {selectedAnswer === currentQuestion.answer ? <p className="correct-message">정답입니다! +100 코인</p> : <p className="incorrect-message">틀렸습니다.</p>}
-              </div>
-              {/* 다음 문제 버튼을 표시합니다 */}
-              <button className="next-button" onClick={handleNextQuestion}>
-                {currentQuestionIndex < shuffledQuestions.length - 1 ? "다음 문제" : "다시 시작"}
-              </button>
-            </div>
-          )}
+      {/* 퀴즈 문제 영역 */}
+      <div className="quiz-container">
+        <div className="quiz-question">
+          <h3>문제</h3>
+          <p className="question-text">1 + 1은 얼마일까요?</p>
         </div>
-      )}
+
+        {/* 선택지 영역 */}
+        <div className="quiz-options">
+          <button className="option-button">1</button>
+          <button className="option-button">2</button>
+          <button className="option-button">3</button>
+          <button className="option-button">4</button>
+        </div>
+
+        {/* 제출 버튼 */}
+        <div className="quiz-submit">
+          <button className="submit-button">정답 제출</button>
+        </div>
+      </div>
     </div>
   );
 }

@@ -3,15 +3,15 @@
 
 export const colors = {
   // 기본 색상 (5가지)
-  blue: "#3498db", // 파란색 - 버튼, 링크, 강조
-  green: "#2ecc71", // 초록색 - 성공, 정답, 확인
-  red: "#e74c3c", // 빨간색 - 실패, 오답, 위험
-  orange: "#f39c12", // 주황색 - 경고, 코인
-  dark: "#2c3e50", // 진한 회색 - 텍스트, 배경
+  blue: "#3498db", // 파란색
+  green: "#2ecc71", // 초록색
+  red: "#e74c3c", // 빨간색
+  orange: "#f39c12", // 주황색
+  dark: "#2c3e50", // 진한 회색
 
   // 보조 색상 (2가지)
-  gray: "#7f8c8d", // 회색 - 부가 텍스트
-  lightGray: "#e9ecef", // 연한 회색 - 테두리, 구분선
+  gray: "#7f8c8d", // 회색
+  lightGray: "#e9ecef", // 연한 회색
 
   // 배경 색상 (2가지)
   white: "#ffffff", // 흰색

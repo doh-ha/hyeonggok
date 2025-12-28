@@ -1,74 +1,18 @@
 /* 페이지 전체 스타일 */
 .page {
-  background: var(--color-white);
+  background: white;
   border-radius: 8px;
   padding: 2rem;
-  box-shadow: 0 2px 8px var(--color-shadow);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .page h2 {
-  color: var(--color-dark);
+  color: #2c3e50;
   margin-bottom: 1rem;
   font-size: 2rem;
 }
 
 .page p {
-  color: var(--color-gray);
+  color: #7f8c8d;
   font-size: 1.1rem;
-}
-
-/* 아이템 컨테이너 */
-.items-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1.5rem;
-  margin-top: 2rem;
-}
-
-/* 아이템 카드 */
-.item-card {
-  background: var(--color-light-bg);
-  border: 2px solid var(--color-light-gray);
-  border-radius: 12px;
-  padding: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-
-.item-icon {
-  font-size: 4rem;
-  margin-bottom: 1rem;
-}
-
-.item-info {
-  width: 100%;
-  margin-bottom: 1rem;
-}
-
-.item-name {
-  color: var(--color-dark);
-  font-size: 1.3rem;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-}
-
-.item-level {
-  color: var(--color-blue);
-  font-size: 0.9rem;
-  font-weight: 600;
-}
-
-/* 구매 버튼 */
-.buy-button {
-  width: 100%;
-  padding: 0.75rem;
-  background: var(--color-green);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
 }

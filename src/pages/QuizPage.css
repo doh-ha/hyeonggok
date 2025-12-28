@@ -1,169 +1,18 @@
 /* 페이지 전체 스타일 */
 .page {
-  background: var(--color-white);
+  background: white;
   border-radius: 8px;
   padding: 2rem;
-  box-shadow: 0 2px 8px var(--color-shadow);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .page h2 {
-  color: var(--color-dark);
+  color: #2c3e50;
   margin-bottom: 1rem;
   font-size: 2rem;
 }
 
 .page p {
-  color: var(--color-gray);
+  color: #7f8c8d;
   font-size: 1.1rem;
-  margin-bottom: 1.5rem;
-}
-
-/* 퀴즈 컨테이너 */
-.quiz-container {
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-/* 문제 박스 */
-.question-box {
-  background: var(--color-light-bg);
-  border: 2px solid var(--color-light-gray);
-  border-radius: 12px;
-  padding: 2rem;
-  margin-bottom: 2rem;
-}
-
-.question-text {
-  color: var(--color-dark);
-  font-size: 1.3rem;
-  font-weight: 600;
-  line-height: 1.6;
-  margin: 0;
-}
-
-/* 선택지 컨테이너 */
-.options-container {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-  margin-bottom: 2rem;
-}
-
-/* 선택지 버튼 기본 스타일 */
-.option-button {
-  padding: 1.5rem;
-  background: var(--color-white);
-  border: 2px solid var(--color-light-gray);
-  border-radius: 8px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: var(--color-dark);
-  cursor: pointer;
-}
-
-/* 선택된 버튼 스타일 */
-.option-button.selected {
-  border-color: var(--color-blue);
-  background: var(--color-light-bg);
-}
-
-/* 정답 버튼 스타일 */
-.option-button.correct {
-  border-color: var(--color-green);
-  background: var(--color-light-bg);
-  color: var(--color-green);
-}
-
-/* 오답 버튼 스타일 */
-.option-button.incorrect {
-  border-color: var(--color-red);
-  background: var(--color-light-bg);
-  color: var(--color-red);
-}
-
-/* 비활성화된 버튼 스타일 */
-.option-button:disabled {
-  cursor: not-allowed;
-  background: var(--color-light-bg);
-}
-
-/* 정답 확인 버튼 */
-.check-button {
-  width: 100%;
-  padding: 1rem;
-  background: var(--color-blue);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 1.2rem;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.check-button:disabled {
-  background: var(--color-gray);
-  cursor: not-allowed;
-}
-
-/* 결과 박스 */
-.result-box {
-  background: var(--color-light-bg);
-  border-radius: 12px;
-  padding: 2rem;
-  margin-top: 2rem;
-}
-
-.result-message {
-  text-align: center;
-  margin-bottom: 1.5rem;
-}
-
-.correct-message {
-  color: var(--color-green);
-  font-size: 1.3rem;
-  font-weight: 600;
-  margin: 0;
-}
-
-.incorrect-message {
-  color: var(--color-red);
-  font-size: 1.3rem;
-  font-weight: 600;
-  margin: 0;
-}
-
-/* 해설 박스 */
-.explanation-box {
-  background: var(--color-white);
-  border-left: 4px solid var(--color-blue);
-  border-radius: 8px;
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
-}
-
-.explanation-text {
-  color: var(--color-gray);
-  font-size: 1rem;
-  line-height: 1.6;
-  margin: 0;
-}
-
-/* 다음 문제 버튼 */
-.next-button {
-  width: 100%;
-  padding: 1rem;
-  background: var(--color-green);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 1.2rem;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-/* 모바일 화면에서 선택지를 1열로 표시 */
-@media (max-width: 768px) {
-  .options-container {
-    grid-template-columns: 1fr;
-  }
 }

@@ -1,10 +1,4 @@
-// React의 useState와 useEffect를 가져옵니다
-import { useState, useEffect } from "react";
 import "./UpgradePage.css";
-// 확률 문제 데이터를 가져옵니다
-import probabilityData from "../data/probability.json";
-// 아이템 데이터를 가져옵니다
-import itemsData from "../data/items.json";
 
 function UpgradePage() {
   // 보유한 아이템 ID 목록을 저장하는 상태

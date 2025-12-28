@@ -1,8 +1,4 @@
-// React의 useState와 useEffect를 가져옵니다
-import { useState, useEffect } from "react";
 import "./BattlePage.css";
-// 몬스터 데이터를 가져옵니다
-import monstersData from "../data/monsters.json";
 
 function BattlePage() {
   // 보유한 아이템 목록을 저장하는 상태

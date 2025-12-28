@@ -1,11 +1,4 @@
-// CSS 파일을 가져옵니다
 import "./ItemPage.css";
-// 아이템 데이터를 가져옵니다
-import itemsData from "../data/items.json";
-// 코인 컨텍스트를 가져옵니다
-import { useCoins } from "../contexts/CoinContext";
-// React의 useState를 가져옵니다
-import { useState } from "react";
 
 function ShopPage() {
   // 코인 컨텍스트에서 코인 관련 함수들을 가져옵니다
